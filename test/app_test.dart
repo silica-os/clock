@@ -67,7 +67,11 @@ void main() {
           const MethodChannel('silica/dbus', JSONMethodCodec()),
           (call) async {
             dbus.add(call);
-            return call.method == 'subscribe' ? 1 : [7];
+            return call.method == 'subscribe'
+                ? 1
+                : call.method == 'unsubscribe'
+                ? true
+                : [7];
           },
         );
   });

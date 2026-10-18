@@ -77,7 +77,11 @@ void main() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
           const MethodChannel('silica/dbus', JSONMethodCodec()),
-          (call) async => call.method == 'subscribe' ? 1 : [7],
+          (call) async => call.method == 'subscribe'
+              ? 1
+              : call.method == 'unsubscribe'
+              ? true
+              : [7],
         );
   });
 
