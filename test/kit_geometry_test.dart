@@ -184,6 +184,17 @@ void main() {
       rectOf(tester, find.byKey(const ValueKey('world map'))),
       const Rect.fromLTWH(0, 52, 1024, 480),
     );
+    // The map is cropped at the poles: the land below the crop (Antarctica reaches 90° S,
+    // 16 pt under the box at this width) is clipped, so the 16 pt gap above the cards stays
+    // the window's colour (clock#8).
+    expect(
+      WorldMapPainter.project(-90, 0, const Size(1024, 480)).dy,
+      greaterThan(480),
+    );
+    expect(
+      find.byKey(const ValueKey('world map')),
+      paints..clipRect(rect: const Rect.fromLTWH(0, 0, 1024, 480)),
+    );
     for (var i = 0; i < 5; i++) {
       expect(
         rectOf(tester, find.byType(WorldCard).at(i)),

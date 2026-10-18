@@ -505,6 +505,9 @@ class WorldMapPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // Cropped at the poles: what falls outside (Antarctica, about 5.6° below the crop) stays
+    // inside the map's box instead of covering the 16 pt gap to the cards (clock#8).
+    canvas.clipRect(Offset.zero & size);
     canvas.drawRect(Offset.zero & size, Paint()..color = ClockMap.ocean);
     // Equirectangular, centred on the equator and cropped at the poles as the kit's map is:
     // one degree is width / 360 in both directions.
