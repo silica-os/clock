@@ -358,6 +358,14 @@ void main() {
     },
   );
 
+  // A choice closes the pop-up menu 150 ms later with a 190 ms fade (silica_ui, measured):
+  // the delay, then the frames of the fade.
+  Future<void> menuClosed(WidgetTester tester) async {
+    await tester.pump(AmalfiPopUpMenuMetrics.chooseFadeDelay);
+    await tester.pump(AmalfiPopUpMenuMetrics.fadeOut);
+    await tester.pump(const Duration(milliseconds: 20));
+  }
+
   testWidgets('the Sound pop-ups choose, preview and keep the sound', (
     tester,
   ) async {
@@ -370,7 +378,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('alarm sound')));
     await tester.pump(const Duration(milliseconds: 300));
     await tester.tap(find.text('Bell').last);
-    await tester.pump(const Duration(milliseconds: 300));
+    await menuClosed(tester);
     expect(ringer.previews, ['bell']);
     await tester.tap(find.byKey(const ValueKey('save')));
     await tester.pump();
@@ -381,7 +389,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('timer sound')));
     await tester.pump(const Duration(milliseconds: 300));
     await tester.tap(find.text('Complete').last);
-    await tester.pump(const Duration(milliseconds: 300));
+    await menuClosed(tester);
     expect(ringer.previews, ['bell', 'complete']);
     await tester.tap(find.byKey(const ValueKey('timer start')));
     await tester.pump();
@@ -390,7 +398,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('timer running sound')));
     await tester.pump(const Duration(milliseconds: 300));
     await tester.tap(find.text('Ring').last);
-    await tester.pump(const Duration(milliseconds: 300));
+    await menuClosed(tester);
     expect(c.currentTimer!.timer.sound, 'phone-incoming-call');
     await done(tester, c);
   });

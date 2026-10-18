@@ -78,9 +78,28 @@ void main() {
       'File',
       'Edit',
       'View',
-      'Window',
-      'Help',
+      // Window and Help are the standard ones (silica-ui#99): the bar gives their titles.
+      '',
+      '',
     ]);
+    expect(menus().map((m) => m['role']).last, 'help');
+    // The standard app menu: About enabled, no Settings… (Clock has none).
+    final app = menus().first['items'] as List;
+    expect(
+      [for (final i in app.cast<Map<Object?, Object?>>()) i['role'] ?? '—'],
+      [
+        'about',
+        '—',
+        'services',
+        '—',
+        'hide',
+        'hide_others',
+        'show_all',
+        '—',
+        'quit',
+      ],
+    );
+    expect((app.first as Map)['enabled'], isTrue);
     // File: the recent timers submenu (empty here), Close (system) and Close All (enabled, the Close All role).
     final recent = item('File', 'Start Recent Timer')['items'] as List;
     expect(recent.single, containsPair('enabled', false));
@@ -177,8 +196,8 @@ void main() {
       'File',
       'Modifica',
       'Vista',
-      'Finestra',
-      'Aiuto',
+      '',
+      '',
     ]);
     expect(item('Vista', 'Ore locali')['checked'], isTrue);
     expect(item('File', 'Chiudi tutto')['enabled'], isTrue);

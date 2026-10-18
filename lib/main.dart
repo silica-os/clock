@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:silica_ui/silica_ui.dart';
 
 import 'src/app.dart';
+import 'src/app_info.dart';
 import 'src/controller.dart';
 import 'src/model/settings.dart';
 import 'src/style.dart';
@@ -14,6 +15,8 @@ import 'src/time/tzif.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  // About Clock and the standard app menu (silica-ui#99).
+  SilicaApp.info = appInfo;
   // The toolbar is unified with the window: Ossido draws only the window buttons.
   SilicaWindow.setFullSizeContent(AmalfiToolbarMetrics.toolbarHeight).ignore();
   // The smallest window that still shows every section (CL-13); no maximum.
