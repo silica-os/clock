@@ -1,0 +1,25 @@
+# Clock as a Silica app bundle (silica-os docs/app-bundles.md): silica-packages and
+# `cargo xtask os deploy` fill the placeholders and sign it. A system app: from /usr/Applications
+# it runs without a sandbox; [permissions] is what a copy elsewhere is given.
+format = 1
+id = "dev.frascella.Clock"
+name = "Clock"
+"name.it" = "Orologio"
+generic_name = "Clock"
+comment = "World clock, alarms, stopwatch and timers"
+version = "@VERSION@"
+build = @BUILD@
+minimum_silica = "0.2.0"
+kind = "flutter"
+runtime = "dev.silica.Platform//1"
+args = ["--size", "1024x800", "--title", "Clock", "--multi-window"]
+categories = ["Utility", "Clock"]
+keywords = ["time", "alarm", "stopwatch", "timer", "world", "ora", "sveglia", "cronometro", "mondo"]
+
+[permissions]
+network = false
+devices = "gpu"
+
+[developer]
+name = "Silica"
+key = "@DEVELOPER_KEY@"
